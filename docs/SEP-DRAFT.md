@@ -57,8 +57,11 @@ Proposal 1 is additive: feeds without extension declarations validate exactly as
 
 PP-SPEC-103 includes the JSON Schema, processing rules, error codes, conformance checklist and examples. An interim pointer using `LineItem.custom_attributes` works today without any ACP change.
 
-## Open questions for the community
+## Proposed answers
 
-1. Where should feed extension declarations live: `FeedMetadata`, the upsert request, or a discovery document?
-2. Should extension fields be allowed on `Variant` only, or on `Product` as well?
+1. **Where feed extension declarations live:** on `FeedMetadata`, using the same shape as checkout's `capabilities.extensions` (`name`, `extends`, `schema`, `spec`). One declaration per feed, no new concepts.
+2. **Which objects accept extension fields:** both `Product` and `Variant`. A field on `Variant` overrides the same field on `Product`, since the variant is what is actually sold.
+
+## Open question for the community
+
 3. Is a registry of recognized third-party extensions in scope for ACP governance?
