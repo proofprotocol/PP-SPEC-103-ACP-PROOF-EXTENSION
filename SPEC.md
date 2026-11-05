@@ -81,7 +81,7 @@ ACP 2026-04-17 defines `Product` and `Variant` with `additionalProperties: false
 Until feeds are extensible, and for agents that do not declare `proof`, a merchant MAY carry a pointer in an existing `LineItem.custom_attributes` entry:
 
 ```json
-{ "display_name": "pp_efficacy_record", "value": "https://register.example/records/rec_01HX..." }
+{ "display_name": "pp_efficacy_record", "value": "https://proofregister.com/records/rec_01HX..." }
 ```
 
 The pointer is a hint only. It is proven only after the agent or a verifier resolves the record and applies Section 5.
@@ -107,7 +107,7 @@ Carried in `proof_claims` (an array) on `Product`, `Variant` (when feeds are ext
 | `result` | ClaimResult | yes | Summary of the outcome (Section 4.3) |
 | `tested_at` | string (RFC 3339) | yes | When the run completed |
 | `expires_at` | string (RFC 3339) | no | After this time the claim is stale and treated as unproven |
-| `registry` | string (URI) | no | Registry where the record and its reproof status are looked up |
+| `registry` | string (URI) | no | Registry where the record and its reproof status are looked up. The reference Registry is ProofRegister, `https://proofregister.com` (Section 4.4). |
 
 ### 4.1 TestedSubject
 
@@ -137,6 +137,12 @@ Carried in `proof_claims` (an array) on `Product`, `Variant` (when feeds are ext
 | `verdict` | string | yes | `supported` (the record supports the statement) or `not_supported` |
 
 `units_stopped + units_missed` MUST equal `units_total`. A provider that publishes only `supported` claims and suppresses `not_supported` ones is misrepresenting its product (ETHICS.md); a merchant MAY carry both.
+
+### 4.4 Reference Registry
+
+The reference Registry for Proof Protocol records is **ProofRegister**, at `https://proofregister.com`. It is where proof records are registered (PP-SPEC-077) and where reproof status is computed (PP-SPEC-081). A claim MAY name another Registry that meets the same requirements. Record paths shown in this specification are illustrative.
+
+ProofRegister is coming online. Until a claim's record resolves, the claim is unproven under Section 5.2, so a Registry that is not yet reachable causes no false proof.
 
 ## 5. Processing rules: Product Claims
 
@@ -281,7 +287,7 @@ All use the ACP flat error shape with `param` as an RFC 9535 JSONPath.
       "method": "https://github.com/proofprotocol/PP-SPEC-077-DEAD-CANARY-PROTOCOL",
       "issuer": "https://issuer.example",
       "record": {
-        "uri": "https://register.example/records/rec_01HXEXAMPLE",
+        "uri": "https://proofregister.com/records/rec_01HXEXAMPLE",
         "digest": "9b74c9897bac770ffc029102a200c5de",
         "hash_alg": "sha-256",
         "anchor": { "type": "nist_beacon", "ref": "https://beacon.nist.gov/beacon/2.0/chain/2/pulse/1234567", "time": "2026-10-30T14:00:00Z" }
@@ -289,7 +295,7 @@ All use the ACP flat error shape with `param` as an RFC 9535 JSONPath.
       "result": { "units_total": 200, "units_stopped": 196, "units_missed": 4, "verdict": "supported" },
       "tested_at": "2026-10-30T14:00:00Z",
       "expires_at": "2027-04-30T00:00:00Z",
-      "registry": "https://register.example"
+      "registry": "https://proofregister.com"
     }
   ]
 }

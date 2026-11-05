@@ -31,6 +31,7 @@ Machine-readable form: [ai_disclosure.json](ai_disclosure.json), conforming to P
 - Decision to contribute to ACP rather than stay a silent witness, keeping methods out of anything submitted under the ACP CLA
 - Decision that the extension leads with proof on the product (Part A) and treats purchase integrity as secondary (Part B)
 - Canonical definition: proof that a product under pressure, does what the vendor says it does
+- Designated ProofRegister (https://proofregister.com) as the reference Registry
 - Review and acceptance (pending)
 
 **AI (Claude Opus 5.5):**
@@ -42,6 +43,7 @@ Machine-readable form: [ai_disclosure.json](ai_disclosure.json), conforming to P
 - Finding that ACP feeds are closed (additionalProperties false) with no extension mechanism, and the resulting two-part SEP (feed extensibility in core; proof as a third-party extension)
 - EfficacyClaim, TestedSubject, RecordRef and ClaimResult fields; the custom_attributes interim pointer
 - Rule that reproof status is looked up in the Registry, never stored in a claim, following PP-SPEC-077 21.8.3
+- Text of Section 4.4 and the note that an unreachable Registry yields unproven claims, not false proof
 
 **Pending acceptance by Craig Ellrod:**
 - Field set and names

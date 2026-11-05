@@ -29,7 +29,7 @@ It is an envelope. It carries no proof method.
 2. **Carry.** Merchants attach claims to line items today through ACP's checkout Extensions Framework. Feed-level claims need ACP to open Product Feeds to that framework; the companion SEP asks for it. An interim `custom_attributes` pointer works now.
 3. **Verify.** The agent treats every claim as unproven until the record resolves, the digest and anchor verify, the issuer is not the provider, and the tested version matches what is sold.
 4. **Buy.** The agent ranks, filters or declines products on proven claims. The approved checkout state, claims included, is hashed and bound to the buyer's approval.
-5. **Reproof.** Reproof status is looked up in the Registry (PP-SPEC-081), never asserted in the claim.
+5. **Reproof.** Reproof status is looked up in the Registry (PP-SPEC-081), never asserted in the claim. The reference Registry is ProofRegister, https://proofregister.com.
 
 ## Files
 
