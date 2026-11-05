@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use or reference this work, cite it as below and attribute Craig Thomas Ellrod and Proof Protocol (see NOTICE.md)."
+title: "Proof Protocol Binding for the Agentic Commerce Protocol (ACP proof extension) (PP-SPEC-103)"
+version: 0.1.0
+date-released: 2026-11-05
+type: standard
+authors:
+  - family-names: Ellrod
+    given-names: Craig Thomas
+    orcid: "https://orcid.org/0009-0004-1058-7666"
+    affiliation: "Craig Thomas Ellrod"
+references:
+  - type: generic
+    title: "Proof Economy Prior Art Declaration"
+    doi: 10.5281/zenodo.21379780
+  - type: standard
+    title: "Agentic Commerce Protocol"
+    url: "https://github.com/agentic-commerce-protocol/agentic-commerce-protocol"
+    notes: "Subject of this work, version 2026-04-17, commit 7fdd78df677a94dce04c770644b0fbbb1401272b"
+license: CC-BY-4.0
+license-url: "LICENSE.md"

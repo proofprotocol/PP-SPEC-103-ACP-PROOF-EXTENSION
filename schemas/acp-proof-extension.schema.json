@@ -1,0 +1,382 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/proofprotocol/PP-SPEC-103-ACP-PROOF-EXTENSION/blob/main/schemas/acp-proof-extension.schema.json",
+  "title": "PP-SPEC-103 ACP proof extension",
+  "description": "Proof Protocol binding for the Agentic Commerce Protocol. Part A: proof_claims (array of EfficacyClaim) on Product, Variant and LineItem. Part B: proof (ProofEnvelope) on checkout. Envelope of references only; carries no proof method. Licensor and author: Craig Thomas Ellrod (Proof Protocol).",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "proof_claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/EfficacyClaim"
+      }
+    },
+    "proof": {
+      "$ref": "#/$defs/ProofEnvelope"
+    }
+  },
+  "$defs": {
+    "EfficacyClaim": {
+      "type": "object",
+      "description": "Part A. An efficacy claim about a product, carried in proof_claims on Product, Variant and LineItem. issuer MUST NOT equal provider (checked by processors).",
+      "required": [
+        "claim_id",
+        "statement",
+        "claim_type",
+        "provider",
+        "tested_subject",
+        "method",
+        "issuer",
+        "record",
+        "result",
+        "tested_at"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 280
+        },
+        "claim_type": {
+          "type": "string",
+          "description": "Extensible. Known values: efficacy, containment, restraint, response, recovery, coverage, parity, persistence."
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tested_subject": {
+          "$ref": "#/$defs/TestedSubject"
+        },
+        "method": {
+          "type": "string",
+          "format": "uri"
+        },
+        "issuer": {
+          "type": "string",
+          "format": "uri"
+        },
+        "record": {
+          "$ref": "#/$defs/RecordRef"
+        },
+        "result": {
+          "$ref": "#/$defs/ClaimResult"
+        },
+        "tested_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "registry": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "TestedSubject": {
+      "type": "object",
+      "required": [
+        "product",
+        "version"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "product": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "configuration_digest": {
+          "$ref": "#/$defs/HexDigest"
+        },
+        "applies_to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "RecordRef": {
+      "type": "object",
+      "required": [
+        "uri",
+        "digest",
+        "hash_alg",
+        "anchor"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "digest": {
+          "$ref": "#/$defs/HexDigest"
+        },
+        "hash_alg": {
+          "$ref": "#/$defs/HashAlg"
+        },
+        "anchor": {
+          "$ref": "#/$defs/TimeAnchor"
+        }
+      }
+    },
+    "ClaimResult": {
+      "type": "object",
+      "required": [
+        "units_total",
+        "units_stopped",
+        "units_missed",
+        "verdict"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "units_total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "units_stopped": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "units_missed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "supported",
+            "not_supported"
+          ]
+        }
+      },
+      "description": "units_stopped + units_missed MUST equal units_total (checked by processors; not expressible in JSON Schema)."
+    },
+    "ProofEnvelope": {
+      "type": "object",
+      "description": "Part B. The `proof` object on checkout requests and responses.",
+      "required": [
+        "version",
+        "pcid"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0.1"
+        },
+        "pcid": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_.:-]+$"
+        },
+        "mandate": {
+          "$ref": "#/$defs/MandateCommitment"
+        },
+        "boundary": {
+          "$ref": "#/$defs/BoundaryReference"
+        },
+        "approval": {
+          "$ref": "#/$defs/ApprovalBinding"
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProofClaim"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          }
+        },
+        "session_state_hash": {
+          "$ref": "#/$defs/HexDigest"
+        }
+      }
+    },
+    "MandateCommitment": {
+      "type": "object",
+      "required": [
+        "hash_alg",
+        "digest",
+        "anchor"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "hash_alg": {
+          "$ref": "#/$defs/HashAlg"
+        },
+        "digest": {
+          "$ref": "#/$defs/HexDigest"
+        },
+        "anchor": {
+          "$ref": "#/$defs/TimeAnchor"
+        },
+        "mandate_uri": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "BoundaryReference": {
+      "type": "object",
+      "required": [
+        "boundary_id",
+        "digest",
+        "anchor",
+        "spec"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "boundary_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "$ref": "#/$defs/HexDigest"
+        },
+        "anchor": {
+          "$ref": "#/$defs/TimeAnchor"
+        },
+        "spec": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "ApprovalBinding": {
+      "type": "object",
+      "required": [
+        "approved_state_hash",
+        "approved_at",
+        "method"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "approved_state_hash": {
+          "$ref": "#/$defs/HexDigest"
+        },
+        "approved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "anchor": {
+          "$ref": "#/$defs/TimeAnchor"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "biometric",
+            "passkey",
+            "explicit_confirm",
+            "other"
+          ]
+        }
+      }
+    },
+    "ProofClaim": {
+      "type": "object",
+      "required": [
+        "claim",
+        "subject",
+        "spec",
+        "verifier"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "claim": {
+          "type": "string",
+          "description": "Extensible. Known values: efficacy, delegation, conduct, restraint, capture, state, attribution, containment, persistence, parity, coverage, reproduction, response, recovery."
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "spec": {
+          "type": "string",
+          "format": "uri"
+        },
+        "verifier": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "description": "Part B claim about a party or control in the purchase. Reproof and verification status is looked up, never stored."
+    },
+    "EvidenceRef": {
+      "type": "object",
+      "required": [
+        "uri",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "digest": {
+          "$ref": "#/$defs/HexDigest"
+        },
+        "kind": {
+          "type": "string",
+          "description": "Extensible. Known values: arena_run, capture_log, reproof, outcome."
+        }
+      }
+    },
+    "TimeAnchor": {
+      "type": "object",
+      "required": [
+        "type",
+        "ref",
+        "time"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "nist_beacon",
+            "rfc3161_tsa"
+          ]
+        },
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "HexDigest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{16,128}$"
+    },
+    "HashAlg": {
+      "type": "string",
+      "enum": [
+        "sha-256",
+        "sha-384"
+      ]
+    }
+  }
+}

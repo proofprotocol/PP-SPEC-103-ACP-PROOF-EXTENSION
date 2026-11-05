@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/proofprotocol/PP-SPEC-077-DEAD-CANARY-PROTOCOL/schemas/ai-disclosure.schema.json",
+  "title": "Authorship Disclosure (PP-SPEC-077 Section 21.15)",
+  "type": "object",
+  "required": [
+    "spec",
+    "work",
+    "work_version",
+    "date",
+    "human_authors",
+    "ai_systems",
+    "shares",
+    "method",
+    "contributions"
+  ],
+  "properties": {
+    "spec": {
+      "const": "PP-SPEC-077:21.15"
+    },
+    "work": {
+      "type": "string",
+      "description": "What this disclosure covers, e.g. PP-SPEC-077, proofswarm-python, an Acceptance Profile"
+    },
+    "work_version": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "human_authors": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "role"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "orcid": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ai_systems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "provider",
+          "model"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "shares": {
+      "type": "object",
+      "required": [
+        "conception_and_normative_decisions",
+        "design_and_naming",
+        "expression",
+        "review_and_acceptance"
+      ],
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "human",
+          "ai"
+        ],
+        "properties": {
+          "human": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "ai": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "method": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "self_attested",
+            "self_estimated",
+            "tool_measured",
+            "tool_attested"
+          ],
+          "description": "self_attested: shares stated by the authors (21.15.4). self_estimated: earlier name for self_attested, still valid. tool_measured, tool_attested: shares from a named tool such as ProofJack.com"
+        },
+        "tool": {
+          "type": "string",
+          "description": "e.g. ProofJack.com"
+        },
+        "tool_version": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contributions": {
+      "type": "object",
+      "required": [
+        "human",
+        "ai"
+      ],
+      "properties": {
+        "human": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ai": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "pending_acceptance": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI proposals not yet accepted by a named human"
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "human_form": {
+      "type": "string",
+      "description": "Path or URI of AI_DISCLOSURE.md"
+    }
+  },
+  "additionalProperties": false
+}

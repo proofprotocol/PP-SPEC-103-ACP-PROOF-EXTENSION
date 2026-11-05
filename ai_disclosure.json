@@ -1,0 +1,72 @@
+{
+  "spec": "PP-SPEC-077:21.15",
+  "work": "PP-SPEC-103 Proof Protocol Binding for the Agentic Commerce Protocol (ACP proof extension)",
+  "work_version": "0.1.0",
+  "date": "2026-11-05",
+  "human_authors": [
+    {
+      "name": "Craig Thomas Ellrod",
+      "orcid": "0009-0004-1058-7666",
+      "role": "Author and inventor; conception, direction, every normative decision, review and acceptance"
+    }
+  ],
+  "ai_systems": [
+    {
+      "provider": "Anthropic",
+      "model": "Claude (Opus 5.5)",
+      "role": "ACP analysis, drafting, structuring, schemas"
+    }
+  ],
+  "shares": {
+    "conception_and_normative_decisions": {
+      "human": 75,
+      "ai": 25
+    },
+    "design_and_naming": {
+      "human": 40,
+      "ai": 60,
+      "note": "Claude proposed: delivery through the ACP Extensions Framework, the field names, session_state_hash and its exclusions, the approval binding, the error codes, and the no-self-verification rule"
+    },
+    "expression": {
+      "human": 5,
+      "ai": 95
+    },
+    "review_and_acceptance": {
+      "human": 100,
+      "ai": 0
+    }
+  },
+  "method": {
+    "kind": "self_attested",
+    "notes": "Shares drafted by the AI from its itemized record of what it proposed and what the author directed, for the author to confirm or correct before release. MAY be re-measured with a tool such as ProofJack.com."
+  },
+  "contributions": {
+    "human": [
+      "The Proof Correlation ID, Time Anchor, exclusionary boundary and mandate concepts the extension carries",
+      "Decision that the ACP interface is its own Proof Protocol specification, the interface to ACP's interface",
+      "Decision to contribute to ACP rather than stay a silent witness, keeping methods out of anything submitted under the ACP CLA",
+      "Decision that the extension leads with proof on the product (Part A) and treats purchase integrity as secondary (Part B)",
+      "Canonical definition: proof that a product under pressure, does what the vendor says it does",
+      "Review and acceptance (pending)"
+    ],
+    "ai": [
+      "Use of the ACP Extensions Framework (third-party extension with schema and spec URLs) so normative text stays in this repository",
+      "Field set, processing rules, error codes, conformance checklist, and JSON Schema",
+      "The `session_state_hash` approval binding and the no-self-verification rule",
+      "SEP draft text",
+      "Text as written and the repository files",
+      "Finding that ACP feeds are closed (additionalProperties false) with no extension mechanism, and the resulting two-part SEP (feed extensibility in core; proof as a third-party extension)",
+      "EfficacyClaim, TestedSubject, RecordRef and ClaimResult fields; the custom_attributes interim pointer",
+      "Rule that reproof status is looked up in the Registry, never stored in a claim, following PP-SPEC-077 21.8.3"
+    ]
+  },
+  "pending_acceptance": [
+    "Field set and names",
+    "session_state_hash exclusions (proof, messages)",
+    "Error codes",
+    "EfficacyClaim field set",
+    "Two-part SEP framing"
+  ],
+  "supersedes": null,
+  "human_form": "AI_DISCLOSURE.md"
+}
